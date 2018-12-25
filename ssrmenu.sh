@@ -71,7 +71,7 @@ BBR_installation_status(){
 	if [[ ! -e ${BBR_file} ]]; then
 		echo -e "${Error} 没有发现 BBR脚本，开始下载..."
 		cd "${file}"
-		if ! wget -N --no-check-certificate https://github.com/xx961024/SSR/blob/master/bbr.sh; then
+		if ! wget -N --no-check-certificate https://raw.githubusercontent.com/xx961024/SSR/master/bbr.sh; then
 			echo -e "${Error} BBR 脚本下载失败 !" && exit 1
 		else
 			echo -e "${Info} BBR 脚本下载完成 !"
@@ -852,7 +852,7 @@ Debian_apt(){
 # 下载 ShadowsocksR
 Download_SSR(){
 	cd "/usr/local"
-	wget -N --no-check-certificate "https://github.com/xx961024/SSR/blob/master/file/ssr-Server-Client/manyuser.zip"
+	wget -N --no-check-certificate "wget https://raw.githubusercontent.com/xx961024/SSR/master/file/ssr-Server-Client/manyuser.zip"
 	#git config --global http.sslVerify false
 	#env GIT_SSL_NO_VERIFY=true git clone -b manyuser https://github.com/xx961024/shadowsocksr.git
 	#[[ ! -e ${ssr_folder} ]] && echo -e "${Error} ShadowsocksR服务端 下载失败 !" && exit 1
@@ -876,14 +876,14 @@ Download_SSR(){
 }
 Service_SSR(){
 	if [[ ${release} = "centos" ]]; then
-		if ! wget --no-check-certificate https://github.com/xx961024/SSR/blob/master/server/file/ssrmu_centos -O /etc/init.d/ssrmu; then
+		if ! wget --no-check-certificate https://raw.githubusercontent.com/xx961024/SSR/master/server/file/ssrmu_centos -O /etc/init.d/ssrmu; then
 			echo -e "${Error} ShadowsocksR服务 管理脚本下载失败 !" && exit 1
 		fi
 		chmod +x /etc/init.d/ssrmu
 		chkconfig --add ssrmu
 		chkconfig ssrmu on
 	else
-		if ! wget --no-check-certificate https://github.com/xx961024/SSR/blob/master/server/file/ssrmu_debian -O /etc/init.d/ssrmu; then
+		if ! wget --no-check-certificate https://raw.githubusercontent.com/xx961024/SSR/master/server/file/ssrmu_debian -O /etc/init.d/ssrmu; then
 			echo -e "${Error} ShadowsocksR服务 管理脚本下载失败 !" && exit 1
 		fi
 		chmod +x /etc/init.d/ssrmu
@@ -897,10 +897,10 @@ JQ_install(){
 		cd "${ssr_folder}"
 		if [[ ${bit} = "x86_64" ]]; then
 			mv "jq-linux64" "jq"
-			#wget --no-check-certificate "https://github.com/xx961024/SSR/blob/master/server/Jq/jq-linux64" -O ${jq_file}
+			#wget --no-check-certificate "https://raw.githubusercontent.com/xx961024/SSR/master/server/Jq/jq-linux64" -O ${jq_file}
 		else
 			mv "jq-linux32" "jq"
-			#wget --no-check-certificate "https://github.com/xx961024/SSR/blob/master/server/Jq/jq-linux32" -O ${jq_file}
+			#wget --no-check-certificate "https://raw.githubusercontent.com/xx961024/SSR/master/server/Jq/jq-linux32" -O ${jq_file}
 		fi
 		[[ ! -e ${jq_file} ]] && echo -e "${Error} JQ解析器 重命名失败，请检查 !" && exit 1
 		chmod +x ${jq_file}
@@ -956,7 +956,7 @@ Install_SSR(){
 }
 Update_SSR(){
 	SSR_installation_status
-	echo -e "暂停更新ShadowsocksR服务端，此功能临时禁用。"
+	echo -e "因破娃暂停更新ShadowsocksR服务端，所以此功能临时禁用。"
 	#cd ${ssr_folder}
 	#git pull
 	#Restart_SSR
@@ -1456,69 +1456,69 @@ View_Log(){
 	tail -f ${ssr_log_file}
 }
 # 锐速
-#Configure_Server_Speeder(){
-#	echo && echo -e "你要做什么？
-# ${Green_font_prefix}1.${Font_color_suffix} 安装 锐速
-# ${Green_font_prefix}2.${Font_color_suffix} 卸载 锐速
-#————————
-# ${Green_font_prefix}3.${Font_color_suffix} 启动 锐速
-# ${Green_font_prefix}4.${Font_color_suffix} 停止 锐速
-# ${Green_font_prefix}5.${Font_color_suffix} 重启 锐速
-# ${Green_font_prefix}6.${Font_color_suffix} 查看 锐速 状态
+Configure_Server_Speeder(){
+	echo && echo -e "你要做什么？
+ ${Green_font_prefix}1.${Font_color_suffix} 安装 锐速
+ ${Green_font_prefix}2.${Font_color_suffix} 卸载 锐速
+————————
+ ${Green_font_prefix}3.${Font_color_suffix} 启动 锐速
+ ${Green_font_prefix}4.${Font_color_suffix} 停止 锐速
+ ${Green_font_prefix}5.${Font_color_suffix} 重启 锐速
+ ${Green_font_prefix}6.${Font_color_suffix} 查看 锐速 状态
  
-# 注意： 锐速和LotServer不能同时安装/启动！" && echo
-#	read -e -p "(默认: 取消):" server_speeder_num
-#	[[ -z "${server_speeder_num}" ]] && echo "已取消..." && exit 1
-#	if [[ ${server_speeder_num} == "1" ]]; then
-#		Install_ServerSpeeder
-#	elif [[ ${server_speeder_num} == "2" ]]; then
-#		Server_Speeder_installation_status
-#		Uninstall_ServerSpeeder
-#	elif [[ ${server_speeder_num} == "3" ]]; then
-#		Server_Speeder_installation_status
-#		${Server_Speeder_file} start
-#		${Server_Speeder_file} status
-#	elif [[ ${server_speeder_num} == "4" ]]; then
-#		Server_Speeder_installation_status
-#		${Server_Speeder_file} stop
-#	elif [[ ${server_speeder_num} == "5" ]]; then
-#		Server_Speeder_installation_status
-#		${Server_Speeder_file} restart
-#		${Server_Speeder_file} status
-#	elif [[ ${server_speeder_num} == "6" ]]; then
-#		Server_Speeder_installation_status
-#		${Server_Speeder_file} status
-#	else
-#		echo -e "${Error} 请输入正确的数字(1-6)" && exit 1
-#	fi
-#}
-#Install_ServerSpeeder(){
-#	[[ -e ${Server_Speeder_file} ]] && echo -e "${Error} 锐速(Server Speeder) 已安装 !" && exit 1
-#	#借用91yun.rog的开心版锐速
-#	wget --no-check-certificate -qO /tmp/serverspeeder.sh https://raw.githubusercontent.com/91yun/serverspeeder/master/serverspeeder.sh
-#	[[ ! -e "/tmp/serverspeeder.sh" ]] && echo -e "${Error} 锐速安装脚本下载失败 !" && exit 1
-#	bash /tmp/serverspeeder.sh
-#	sleep 2s
-#	PID=`ps -ef |grep -v grep |grep "serverspeeder" |awk '{print $2}'`
-#	if [[ ! -z ${PID} ]]; then
-#		rm -rf /tmp/serverspeeder.sh
-#		rm -rf /tmp/91yunserverspeeder
-#		rm -rf /tmp/91yunserverspeeder.tar.gz
-#		echo -e "${Info} 锐速(Server Speeder) 安装完成 !" && exit 1
-#	else
-#		echo -e "${Error} 锐速(Server Speeder) 安装失败 !" && exit 1
-#	fi
-#}
-#Uninstall_ServerSpeeder(){
-#	echo "确定要卸载 锐速(Server Speeder)？[y/N]" && echo
-#	read -e -p "(默认: n):" unyn
-#	[[ -z ${unyn} ]] && echo && echo "已取消..." && exit 1
-#	if [[ ${unyn} == [Yy] ]]; then
-#		chattr -i /serverspeeder/etc/apx*
-#		/serverspeeder/bin/serverSpeeder.sh uninstall -f
-#		echo && echo "锐速(Server Speeder) 卸载完成 !" && echo
-#	fi
-#}
+ 注意： 锐速和LotServer不能同时安装/启动！" && echo
+	read -e -p "(默认: 取消):" server_speeder_num
+	[[ -z "${server_speeder_num}" ]] && echo "已取消..." && exit 1
+	if [[ ${server_speeder_num} == "1" ]]; then
+		Install_ServerSpeeder
+	elif [[ ${server_speeder_num} == "2" ]]; then
+		Server_Speeder_installation_status
+		Uninstall_ServerSpeeder
+	elif [[ ${server_speeder_num} == "3" ]]; then
+		Server_Speeder_installation_status
+		${Server_Speeder_file} start
+		${Server_Speeder_file} status
+	elif [[ ${server_speeder_num} == "4" ]]; then
+		Server_Speeder_installation_status
+		${Server_Speeder_file} stop
+	elif [[ ${server_speeder_num} == "5" ]]; then
+		Server_Speeder_installation_status
+		${Server_Speeder_file} restart
+		${Server_Speeder_file} status
+	elif [[ ${server_speeder_num} == "6" ]]; then
+		Server_Speeder_installation_status
+		${Server_Speeder_file} status
+	else
+		echo -e "${Error} 请输入正确的数字(1-6)" && exit 1
+	fi
+}
+Install_ServerSpeeder(){
+	[[ -e ${Server_Speeder_file} ]] && echo -e "${Error} 锐速(Server Speeder) 已安装 !" && exit 1
+	#借用91yun.rog的开心版锐速
+	wget --no-check-certificate -qO /tmp/serverspeeder.sh https://raw.githubusercontent.com/91yun/serverspeeder/master/serverspeeder.sh
+	[[ ! -e "/tmp/serverspeeder.sh" ]] && echo -e "${Error} 锐速安装脚本下载失败 !" && exit 1
+	bash /tmp/serverspeeder.sh
+	sleep 2s
+	PID=`ps -ef |grep -v grep |grep "serverspeeder" |awk '{print $2}'`
+	if [[ ! -z ${PID} ]]; then
+		rm -rf /tmp/serverspeeder.sh
+		rm -rf /tmp/91yunserverspeeder
+		rm -rf /tmp/91yunserverspeeder.tar.gz
+		echo -e "${Info} 锐速(Server Speeder) 安装完成 !" && exit 1
+	else
+		echo -e "${Error} 锐速(Server Speeder) 安装失败 !" && exit 1
+	fi
+}
+Uninstall_ServerSpeeder(){
+	echo "确定要卸载 锐速(Server Speeder)？[y/N]" && echo
+	read -e -p "(默认: n):" unyn
+	[[ -z ${unyn} ]] && echo && echo "已取消..." && exit 1
+	if [[ ${unyn} == [Yy] ]]; then
+		chattr -i /serverspeeder/etc/apx*
+		/serverspeeder/bin/serverSpeeder.sh uninstall -f
+		echo && echo "锐速(Server Speeder) 卸载完成 !" && echo
+	fi
+}
 # LotServer
 Configure_LotServer(){
 	echo && echo -e "你要做什么？
